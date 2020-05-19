@@ -3,6 +3,7 @@ import express from "express";
 import socketIO from "socket.io";
 import logger from "morgan";
 import socketController from "./socketController";
+import events from "./events";
 
 const PORT = 4000;
 const app = express();
@@ -14,7 +15,9 @@ app.use(logger("dev"));
 const handleListening = () =>
   console.log(`✅ Server running: http://localhost:${PORT}`);
 
-app.get("/", (req, res) => res.render("home"));
+app.get("/", (req, res) =>
+  res.render("home", { events: JSON.stringify(events) })
+);
 
 const server = app.listen(PORT, handleListening);
 
